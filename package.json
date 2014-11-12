@@ -1,0 +1,16 @@
+{
+  "name": "shaoxi",
+  "version": "0.0.1",
+  "description": "watch current file directory and do xxx",
+  "main": "index.js",
+  "bin": {"shaoxi": "./index.js"},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "cadl",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^0.10.5"
+  },
+  "devDependencies": {}
+}
