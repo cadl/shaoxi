@@ -20,7 +20,6 @@ watcher.on('all', function(method, path) {
         return;
       }
       console.log('Exec failed', code);
-      process.exit(code);
     })
     .stdout.on('data', function(data) {
       var l = data.split('\n');
