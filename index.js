@@ -6,29 +6,33 @@ var exec = require('child_process').exec,
 var chokidar = require('chokidar');
 
 
-var watcher = chokidar.watch(path.resolve(process.cwd()), {ignored: /(#.+#)|(.git.*)/, persistent: true, ignoreInitial: true});
+var watcher = chokidar.watch(path.resolve(process.cwd()), {ignored: /(#.+#)/, persistent: true, ignoreInitial: true});
 
 
 watcher.on('all', function(method, path) {
   console.log(method, path);
   console.log('Doing', process.argv.slice(2).join(' '));
 
-  exec(process.argv.slice(2).join(' '))
-    .on('exit', function(code) {
-      if (code == 0) {
-        console.log('Exec success');
-        return;
-      }
-      console.log('Exec failed', code);
-    })
-    .stdout.on('data', function(data) {
-      var l = data.split('\n');
-      l.forEach(function(s) {
-        if (s) {
-          console.log('>>>', s);
+  try {
+    exec(process.argv.slice(2).join(' '))
+      .on('exit', function(code) {
+        if (code == 0) {
+          console.log('Exec success');
+          return;
         }
+        console.log('Exec failed', code);
+      })
+      .stdout.on('data', function(data) {
+        var l = data.split('\n');
+        l.forEach(function(s) {
+          if (s) {
+            console.log('>>>', s);
+          }
+        });
       });
-    });
+  } catch(e) {
+    console.error('Exec error', e);
+  }
 });
 
 
